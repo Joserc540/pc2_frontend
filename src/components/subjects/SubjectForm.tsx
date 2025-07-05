@@ -50,33 +50,42 @@ const SubjectForm: React.FC = () => {
   };
 
   return (
-    <form onSubmit={handleSubmit} style={{ maxWidth: 400, margin: '2rem auto' }}>
-      <h2>Crear Materia</h2>
+    <form
+      onSubmit={handleSubmit}
+      className="bg-white shadow-lg rounded-lg p-8 w-full max-w-md mx-auto mt-8 space-y-4"
+    >
+      <h2 className="text-xl font-bold text-indigo-700 mb-4">Crear Materia</h2>
       <input
         type="text"
         placeholder="Nombre"
         value={name}
         onChange={handleChange(setName)}
-        style={{ width: '100%', marginBottom: 8 }}
+        className="w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-indigo-400"
       />
       <input
         type="text"
         placeholder="Código"
         value={code}
         onChange={handleChange(setCode)}
-        style={{ width: '100%', marginBottom: 8 }}
+        className="w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-indigo-400"
       />
       <input
         type="number"
         placeholder="Máximo de estudiantes"
         value={maxStudents}
         onChange={e => { setMaxStudents(Number(e.target.value)); setError(''); setSuccess(''); }}
-        style={{ width: '100%', marginBottom: 8 }}
+        className="w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-indigo-400"
       />
-      {loading && <div style={{ color: 'blue', marginBottom: 8 }}>Creando materia...</div>}
-      {error && <div style={{ color: 'red', marginBottom: 8 }}>{error}</div>}
-      {success && <div style={{ color: 'green', marginBottom: 8 }}>{success}</div>}
-      <button type="submit" disabled={loading}>Crear</button>
+      {loading && <div className="text-blue-600 text-sm">Creando materia...</div>}
+      {error && <div className="text-red-600 text-sm">{error}</div>}
+      {success && <div className="text-green-600 text-sm">{success}</div>}
+      <button
+        type="submit"
+        disabled={loading}
+        className="w-full py-2 px-4 bg-indigo-600 hover:bg-indigo-700 text-white font-semibold rounded transition"
+      >
+        Crear
+      </button>
     </form>
   );
 };

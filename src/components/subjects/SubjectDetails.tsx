@@ -18,17 +18,17 @@ const SubjectDetails: React.FC = () => {
       .finally(() => setLoading(false));
   }, [id]);
 
-  if (loading) return <p>Cargando materia...</p>;
-  if (error) return <p>{error}</p>;
-  if (!subject) return <p>No se encontró la materia.</p>;
+  if (loading) return <p className="text-center text-indigo-600 mt-8">Cargando materia...</p>;
+  if (error) return <p className="text-center text-red-600 mt-8">{error}</p>;
+  if (!subject) return <p className="text-center text-gray-600 mt-8">No se encontró la materia.</p>;
 
   return (
-    <div>
-      <h2>Detalle de Materia</h2>
-      <p><strong>Nombre:</strong> {subject.name}</p>
-      <p><strong>Código:</strong> {subject.code}</p>
-      <p><strong>Inscritos:</strong> {subject.description}</p>
-      <p><strong>Descripción:</strong> {subject.location}</p>
+    <div className="max-w-md mx-auto mt-12 bg-white rounded-lg shadow p-8">
+      <h2 className="text-2xl font-bold text-indigo-700 mb-4">Detalle de Materia</h2>
+      <p className="mb-2"><span className="font-semibold">Nombre:</span> {subject.name}</p>
+      <p className="mb-2"><span className="font-semibold">Código:</span> {subject.code}</p>
+      <p className="mb-2"><span className="font-semibold">Inscritos:</span> {subject.description}</p>
+      <p className="mb-2"><span className="font-semibold">Descripción:</span> {subject.location}</p>
     </div>
   );
 };

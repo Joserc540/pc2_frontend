@@ -17,36 +17,43 @@ const SubjectsList: React.FC = () => {
       .finally(() => setLoading(false));
   }, []);
 
-  if (loading) return <p>Cargando materias...</p>;
-  if (error) return <p>{error}</p>;
+  if (loading) return <p className="text-center text-indigo-600 mt-8">Cargando materias...</p>;
+  if (error) return <p className="text-center text-red-600 mt-8">{error}</p>;
 
   return (
-    <div>
-      <h2>Lista de Materias</h2>
-      <table style={{ width: '100%', borderCollapse: 'collapse' }}>
-        <thead>
-          <tr>
-            <th>Nombre</th>
-            <th>Código</th>
-            <th>Cupo</th>
-            <th>Inscritos</th>
-            <th>Acciones</th>
-          </tr>
-        </thead>
-        <tbody>
-          {subjects.map(subject => (
-            <tr key={subject.id} style={{ borderBottom: '1px solid #ccc' }}>
-              <td>{subject.name}</td>
-              <td>{subject.code}</td>
-              <td>{subject.description}</td>
-              <td>{subject.location}</td>
-              <td>
-                <button onClick={() => navigate(`/subjects/${subject.id}`)}>Ver Detalle</button>
-              </td>
+    <div className="max-w-4xl mx-auto mt-8 bg-white rounded-lg shadow p-6">
+      <h2 className="text-xl font-bold mb-4 text-indigo-700">Lista de Materias</h2>
+      <div className="overflow-x-auto">
+        <table className="min-w-full border rounded">
+          <thead>
+            <tr className="bg-indigo-100">
+              <th className="py-2 px-4 text-left">Nombre</th>
+              <th className="py-2 px-4 text-left">Código</th>
+              <th className="py-2 px-4 text-left">Cupo</th>
+              <th className="py-2 px-4 text-left">Inscritos</th>
+              <th className="py-2 px-4 text-left">Acciones</th>
             </tr>
-          ))}
-        </tbody>
-      </table>
+          </thead>
+          <tbody>
+            {subjects.map(subject => (
+              <tr key={subject.id} className="border-b hover:bg-indigo-50">
+                <td className="py-2 px-4">{subject.name}</td>
+                <td className="py-2 px-4">{subject.code}</td>
+                <td className="py-2 px-4">{subject.description}</td>
+                <td className="py-2 px-4">{subject.location}</td>
+                <td className="py-2 px-4">
+                  <button
+                    onClick={() => navigate(`/subjects/${subject.id}`)}
+                    className="bg-indigo-500 hover:bg-indigo-600 text-white px-3 py-1 rounded transition"
+                  >
+                    Ver Detalle
+                  </button>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
     </div>
   );
 };

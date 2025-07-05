@@ -113,58 +113,91 @@ const EnrollmentForm: React.FC = () => {
   };
 
   return (
-    <div style={{ maxWidth: 500, margin: '2rem auto' }}>
-      <h2>Matrícula (Multi-paso)</h2>
-      {loading && <p>Cargando...</p>}
-      {error && <p style={{ color: 'red' }}>{error}</p>}
-      {success && <p style={{ color: 'green' }}>{success}</p>}
-      <div>
-        {step === 1 && (
-          <div>
-            <p>Paso 1: Selecciona un estudiante</p>
-            <select value={studentId ?? ''} onChange={handleStudentSelect} style={{ width: '100%', marginBottom: 8 }}>
-              <option value="">Selecciona...</option>
-              {students.map(s => (
-                <option key={s.id} value={s.id}>{s.first_name} {s.last_name}</option>
-              ))}
-            </select>
-            <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-              <button disabled>Anterior</button>
-              <button disabled={!studentId} onClick={nextStep}>Siguiente</button>
-            </div>
+    <div className="max-w-lg mx-auto mt-12 bg-white rounded-lg shadow p-8">
+      <h2 className="text-2xl font-bold text-indigo-700 mb-6">Matrícula</h2>
+      {loading && <div className="text-blue-600 text-sm mb-4">Cargando...</div>}
+      {error && <div className="text-red-600 text-sm mb-4">{error}</div>}
+      {success && <div className="text-green-600 text-sm mb-4">{success}</div>}
+      {step === 1 && (
+        <div className="mb-6">
+          <label className="block text-sm font-medium text-gray-700 mb-2">Selecciona un estudiante:</label>
+          <select
+            className="w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-indigo-400"
+            value={studentId || ''}
+            onChange={handleStudentSelect}
+          >
+            <option value="">-- Selecciona --</option>
+            {students.map(s => (
+              <option key={s.id} value={s.id}>{s.first_name} {s.last_name}</option>
+            ))}
+          </select>
+          <button
+            className="mt-4 w-full py-2 px-4 bg-indigo-600 hover:bg-indigo-700 text-white font-semibold rounded transition"
+            onClick={nextStep}
+            disabled={!studentId}
+          >
+            Siguiente
+          </button>
+        </div>
+      )}
+      {step === 2 && (
+        <div className="mb-6">
+          <label className="block text-sm font-medium text-gray-700 mb-2">Selecciona una materia:</label>
+          <select
+            className="w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-indigo-400"
+            value={subjectId || ''}
+            onChange={handleSubjectSelect}
+          >
+            <option value="">-- Selecciona --</option>
+            {subjects.map(s => (
+              <option key={s.id} value={s.id}>
+                {s.name} ({subjectOccupancy[s.id] || 0}/{subjectMax[s.id]})
+              </option>
+            ))}
+          </select>
+          <div className="flex justify-between mt-4">
+            <button
+              className="py-2 px-4 bg-gray-300 hover:bg-gray-400 text-gray-800 font-semibold rounded transition"
+              onClick={prevStep}
+            >
+              Atrás
+            </button>
+            <button
+              className="py-2 px-4 bg-indigo-600 hover:bg-indigo-700 text-white font-semibold rounded transition"
+              onClick={nextStep}
+              disabled={!subjectId}
+            >
+              Siguiente
+            </button>
           </div>
-        )}
-        {step === 2 && (
-          <div>
-            <p>Paso 2: Selecciona una materia</p>
-            <select value={subjectId ?? ''} onChange={handleSubjectSelect} style={{ width: '100%', marginBottom: 8 }}>
-              <option value="">Selecciona...</option>
-              {subjects.map(s => (
-                <option key={s.id} value={s.id} disabled={subjectOccupancy[s.id] >= subjectMax[s.id] || studentEnrollments.includes(s.id)}>
-                  {s.name} ({subjectOccupancy[s.id] || 0}/{subjectMax[s.id]})
-                </option>
-              ))}
-            </select>
-            <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-              <button onClick={prevStep}>Anterior</button>
-              <button disabled={!subjectId} onClick={nextStep}>Siguiente</button>
-            </div>
+        </div>
+      )}
+      {step === 3 && (
+        <div className="mb-6">
+          <h3 className="text-lg font-semibold mb-2">Confirmación</h3>
+          <p className="mb-4">
+            Está a punto de inscribir a{' '}
+            <span className="font-bold">{students.find(s => s.id === studentId)?.first_name} {students.find(s => s.id === studentId)?.last_name}</span>{' '}
+            en la materia{' '}
+            <span className="font-bold">{subjects.find(s => s.id === subjectId)?.name}</span>.
+          </p>
+          <div className="flex justify-between">
+            <button
+              className="py-2 px-4 bg-gray-300 hover:bg-gray-400 text-gray-800 font-semibold rounded transition"
+              onClick={prevStep}
+            >
+              Atrás
+            </button>
+            <button
+              className="py-2 px-4 bg-green-600 hover:bg-green-700 text-white font-semibold rounded transition"
+              onClick={handleConfirm}
+              disabled={loading}
+            >
+              Confirmar
+            </button>
           </div>
-        )}
-        {step === 3 && (
-          <div>
-            <p>Paso 3: Confirmar inscripción</p>
-            <ul style={{ textAlign: 'left' }}>
-              <li><b>Estudiante:</b> {students.find(s => s.id === studentId)?.first_name} {students.find(s => s.id === studentId)?.last_name}</li>
-              <li><b>Materia:</b> {subjects.find(s => s.id === subjectId)?.name}</li>
-            </ul>
-            <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-              <button onClick={prevStep}>Anterior</button>
-              <button onClick={handleConfirm}>Confirmar</button>
-            </div>
-          </div>
-        )}
-      </div>
+        </div>
+      )}
     </div>
   );
 };

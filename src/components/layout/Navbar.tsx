@@ -8,11 +8,16 @@ const Navbar: React.FC = () => {
     navigate('/login');
   };
   return (
-    <nav style={{ display: 'flex', gap: 16, padding: 16, background: '#f5f5f5' }}>
-      <Link to="/dashboard">Dashboard</Link>
-      <Link to="/subjects">Materias</Link>
-      <Link to="/enrollment">Matrícula</Link>
-      <button onClick={handleLogout} style={{ marginLeft: 'auto' }}>Salir</button>
+    <nav className="flex items-center gap-6 px-6 py-4 bg-indigo-600 shadow text-white">
+      <Link to="/dashboard" className="font-bold hover:underline">Dashboard</Link>
+      <Link to="/subjects" className="hover:underline">Materias</Link>
+      <Link to="/enrollment" className="hover:underline">Matrícula</Link>
+      <button
+        onClick={handleLogout}
+        className="ml-auto bg-red-500 hover:bg-red-600 px-4 py-1 rounded font-semibold transition"
+      >
+        Salir
+      </button>
     </nav>
   );
 };

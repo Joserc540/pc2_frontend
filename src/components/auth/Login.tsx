@@ -33,20 +33,34 @@ const Login: React.FC = () => {
   };
 
   return (
-    <div style={{ maxWidth: 400, margin: '2rem auto' }}>
-      <h2>Iniciar Sesión</h2>
-      <form onSubmit={handleSubmit}>
-        <label htmlFor="apiKey">API Key:</label>
-        <input
-          id="apiKey"
-          type="text"
-          value={apiKey}
-          onChange={handleChange}
-          style={{ width: '100%', marginBottom: 8 }}
-        />
-        {loading && <div style={{ color: 'blue', marginBottom: 8 }}>Validando...</div>}
-        {error && <div style={{ color: 'red', marginBottom: 8 }}>{error}</div>}
-        <button type="submit" disabled={loading}>Entrar</button>
+    <div className="flex items-center justify-center min-h-screen bg-gradient-to-br from-blue-100 to-indigo-200">
+      <form
+        onSubmit={handleSubmit}
+        className="bg-white shadow-lg rounded-lg p-8 w-full max-w-sm space-y-6"
+      >
+        <h2 className="text-2xl font-bold text-center text-indigo-700">Iniciar Sesión</h2>
+        <div>
+          <label htmlFor="apiKey" className="block text-sm font-medium text-gray-700 mb-1">
+            API Key:
+          </label>
+          <input
+            id="apiKey"
+            type="text"
+            value={apiKey}
+            onChange={handleChange}
+            className="w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-indigo-400"
+            autoFocus
+          />
+        </div>
+        {loading && <div className="text-blue-600 text-sm">Validando...</div>}
+        {error && <div className="text-red-600 text-sm">{error}</div>}
+        <button
+          type="submit"
+          disabled={loading}
+          className="w-full py-2 px-4 bg-indigo-600 hover:bg-indigo-700 text-white font-semibold rounded transition"
+        >
+          Entrar
+        </button>
       </form>
     </div>
   );
